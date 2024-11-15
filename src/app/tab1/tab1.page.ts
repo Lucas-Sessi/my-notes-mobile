@@ -1,9 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import { IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow } from '@ionic/angular/standalone';
 import { AtivoUsuarioService } from './service/ativo_usuario.service';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
@@ -13,53 +11,68 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
   styleUrls: ['tab1.page.scss'],
   standalone: true,
   imports: [
-    IonicModule,
     CommonModule,
-    ExploreContainerComponent,
-  ]
+    IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow
+  ],
 })
 export class Tab1Page implements OnInit {
-  @ViewChild('barChart', { static: true }) barChart!: ElementRef;
+  @ViewChild('barChart', { static: false }) barChart!: ElementRef;
   private chart: Chart<'pie'> | undefined;
   public investimentos: any[] = [];
   private idUser = 1;
+  public isLoading = true;
 
-  constructor(
-    private readonly ativoUsuarioService: AtivoUsuarioService,
-  ) {}
+  constructor(private readonly ativoUsuarioService: AtivoUsuarioService) {}
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.ativoUsuarioService.findAll(this.idUser).subscribe({
       next: (response) => {
-        console.log(response.data);
         this.investimentos = response.data || [];
-        this.createChart(); // Cria o gráfico após carregar os dados
+        this.isLoading = false;
+
+        // Garante que o gráfico será criado após a renderização do DOM
+        setTimeout(() => this.createChart(), 0);
       },
       error: (error) => {
-        console.log('deu erro ao listar: ', error);
-      }
+        this.isLoading = false;
+        console.error('Erro ao listar investimentos:', error);
+      },
     });
   }
 
   createChart() {
-    const totalPrecoMedio = this.investimentos.reduce((acc, item) => acc + item.preco_medio, 0);
-    const labels = this.investimentos.map((item) => item.desc_ativo);
-    const data = this.investimentos.map((item) => (item.preco_medio / totalPrecoMedio) * 100);
+    if (!this.barChart || !this.barChart.nativeElement) {
+      console.error('Elemento barChart não está disponível!');
+      return;
+    }
 
-    const colors = this.investimentos.map((_, index) =>
-      `hsl(${(index * 360) / this.investimentos.length}, 70%, 60%)`
+    const totalPrecoMedio = this.investimentos.reduce(
+      (acc, item) => acc + item.preco_medio,
+      0
+    );
+    const labels = this.investimentos.map((item) => item.desc_ativo);
+    const data = this.investimentos.map(
+      (item) => (item.preco_medio / totalPrecoMedio) * 100
+    );
+
+    const colors = this.investimentos.map(
+      (_, index) => `hsl(${(index * 360) / this.investimentos.length}, 70%, 60%)`
     );
 
     const config: ChartConfiguration<'pie'> = {
-      type: 'pie', // Tipo do gráfico (pizza)
+      type: 'pie',
       data: {
         labels: labels,
         datasets: [
           {
             label: 'Distribuição de Ativos (%)',
             data: data,
-            backgroundColor: colors, // Cores dinâmicas para cada segmento
-            borderColor: '#ffffff', // Cor da borda dos segmentos
+            backgroundColor: colors,
+            borderColor: '#ffffff',
             borderWidth: 1,
           },
         ],
@@ -68,7 +81,10 @@ export class Tab1Page implements OnInit {
         responsive: true,
         plugins: {
           legend: {
-            position: 'bottom', // Coloca a legenda abaixo do gráfico
+            position: 'bottom',
+            labels: {
+              color: '#ffffff',
+            }
           },
           tooltip: {
             callbacks: {
@@ -79,19 +95,19 @@ export class Tab1Page implements OnInit {
             },
           },
           datalabels: {
-            color: '#fff', // Cor dos percentuais sobre o gráfico
-            formatter: (value: number) => `${value.toFixed(2)}%`, // Formata o valor para exibir o percentual
+            color: '#fff',
+            formatter: (value: number) => `${value.toFixed(2)}%`,
             anchor: 'center',
             align: 'end',
             offset: 10,
             font: {
               size: 10,
-              weight: 'bold'
+              weight: 'bold',
             },
-          }
+          },
         },
       },
-      plugins: [DataLabelsPlugin as any] // Ativa o plugin de DataLabels para exibir os percentuais
+      plugins: [DataLabelsPlugin as any],
     };
 
     this.chart = new Chart(this.barChart.nativeElement, config);

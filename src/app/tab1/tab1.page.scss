@@ -27,3 +27,14 @@ canvas {
     border-right: none; /* Remove a linha na última coluna para evitar uma borda extra */
   }
   
+
+  .loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #6366f1; // Customize a cor, se necessário
+  }
+  

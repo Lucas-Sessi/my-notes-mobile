@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SessionService } from 'src/app/shared/services/session.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,9 @@ import { Injectable } from '@angular/core';
 export class AtivoUsuarioService {
     url = `${environment.apiUrl}/ativo-usuario`;
 
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+    ) {}
 
     public findAll(idUser: number): Observable<any> {
         return this.http.get(`${this.url}/list/user/${idUser}`)

@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.0.58:4000'
+  apiUrl: 'https://my-notes-backend-pearl.vercel.app'
 };

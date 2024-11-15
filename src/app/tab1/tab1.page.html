@@ -1,10 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Investimentos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!--<ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">investimentos</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header>-->
 
+   <!-- Loading Spinner -->
+   <div *ngIf="isLoading" class="loading-spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
    <!-- Gráfico -->
   <div style="padding: 16px;">
     <canvas #barChart></canvas>
@@ -32,4 +47,5 @@
       </ion-row>
     </ion-grid>
   </div>
+</ng-container>
 </ion-content>
