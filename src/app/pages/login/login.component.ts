@@ -12,10 +12,10 @@ import {
   IonSpinner,
   IonContent,
 } from '@ionic/angular/standalone';
-import { AuthService } from '../shared/services/auth.service';
-import { SessionService } from '../shared/services/session.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { SessionService } from 'src/app/shared/services/auth/session.service';
 
 @Component({
   selector: 'app-login',
