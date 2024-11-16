@@ -6,16 +6,16 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  selector: 'app-investimentos-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
     IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow
   ],
 })
-export class Tab1Page implements OnInit {
+export class HomePage implements OnInit {
   @ViewChild('barChart', { static: false }) barChart!: ElementRef;
   private chart: Chart<'pie'> | undefined;
   public investimentos: any[] = [];

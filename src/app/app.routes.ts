@@ -9,9 +9,9 @@ export const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'investimentos',
         loadComponent: () =>
-          import('./features/investimentos/tab1.page').then((m) => m.Tab1Page),
+          import('./features/investimentos/home/home.page').then((m) => m.HomePage),
       },
       {
         path: 'tab2',
