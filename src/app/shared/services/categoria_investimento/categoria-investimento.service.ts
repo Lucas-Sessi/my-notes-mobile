@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class AtivoUsuarioService {
+export class CategoriaInvestimentoService {
     url = `${environment.apiUrl}/categria-investimento`;
 
     constructor(

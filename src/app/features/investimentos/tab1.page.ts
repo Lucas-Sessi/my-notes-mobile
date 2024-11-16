@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow } from '@ionic/angular/standalone';
-import { AtivoUsuarioService } from './service/ativo_usuario.service';
 import { CommonModule } from '@angular/common';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
 
 @Component({
   selector: 'app-tab1',
