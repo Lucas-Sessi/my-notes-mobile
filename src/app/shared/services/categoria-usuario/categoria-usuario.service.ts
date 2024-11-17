@@ -7,15 +7,15 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class CategoriaInvestimentoService {
-    url = `${environment.apiUrl}/categoria-investimento`;
+export class CategoriaUsuarioService {
+    url = `${environment.apiUrl}/categoria-usuario`;
 
     constructor(
         private http: HttpClient,
     ) {}
 
-    public findAll(): Observable<any> {
-        return this.http.get(`${this.url}`)
+    public findAll(idUser: number, idCategoria: number): Observable<any> {
+        return this.http.get(`${this.url}/list/?idUser=${idUser}&idCategoria=${idCategoria}`)
     }
 
     public findOneById(id: number): Observable<any> {

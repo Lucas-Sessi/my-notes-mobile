@@ -14,8 +14,8 @@ export class AtivoUsuarioService {
         private http: HttpClient,
     ) {}
 
-    public findAll(idUser: number): Observable<any> {
-        return this.http.get(`${this.url}/list/user/${idUser}`)
+    public findAll(idUser: number, idCategoria: number): Observable<any> {
+        return this.http.get(`${this.url}/list/category/${idCategoria}?idUser=${idUser}`)
     }
 
     public findOneById(id: number): Observable<any> {
@@ -24,6 +24,10 @@ export class AtivoUsuarioService {
 
     public create(data: any): Observable<any> {
         return this.http.post(`${this.url}/create`, data)
+    }
+    
+    public calcularAporte(data: any): Observable<any> {
+        return this.http.post(`${this.url}/calcular/aporte`, data)
     }
 
     public update(id: number, data: any): Observable<any> {

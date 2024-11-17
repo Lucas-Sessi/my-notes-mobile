@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ getCategoriaDescricao() }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+   <!-- Loading Spinner -->
+   <div *ngIf="isLoading" class="loading-spinner">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+    <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher> -->
+
+   <!-- Gráfico -->
+  <div style="padding: 16px;">
+    <canvas #barChart></canvas>
+  </div>
+
+  <!-- Lista -->
+  <div style="overflow-x: auto;">
+    <ion-grid style="min-width: 800px; white-space: nowrap;">
+      <!-- Cabeçalho da tabela -->
+      <ion-row class="header">
+        <ion-col><strong>Ativo</strong></ion-col>
+        <ion-col><strong>Quantidade</strong></ion-col>
+        <ion-col><strong>Preço Médio</strong></ion-col>
+        <ion-col><strong>Cotação Atual</strong></ion-col>
+        <ion-col><strong>Nota</strong></ion-col>
+        <ion-col><strong>Saldo</strong></ion-col>
+        <ion-col><strong>Variação</strong></ion-col>
+        <!-- <ion-col><strong>Categoria</strong></ion-col> -->
+      </ion-row>
+
+      <!-- Conteúdo da tabela -->
+      <ion-row *ngFor="let investimento of investimentos">
+        <ion-col>{{ transformToUpperCase(investimento.sigla_ativo) }}</ion-col>
+        <ion-col>{{ investimento.qtd_cateira }}</ion-col>
+        <ion-col>R$ {{ investimento.preco_medio }}</ion-col>
+        <ion-col>R$ {{ investimento.cotacaoAtual }}</ion-col>
+        <ion-col>{{ investimento.nota_ativo }}</ion-col>
+        <ion-col>R$ {{ investimento.saldoAtual }}</ion-col>
+        <ion-col>
+          <div class="variacao" [ngClass]="getVariacaoClass(investimento.rentabilidadeAtual)">
+            <ion-icon [name]="getVariacaoIcon(investimento.rentabilidadeAtual)"></ion-icon>
+            <span>{{ investimento.rentabilidadeAtual }}%</span>
+          </div>
+        </ion-col>
+        <!-- <ion-col>{{ investimento.desc_categoria }}</ion-col> -->
+      </ion-row>
+    </ion-grid>
+  </div>
+</ng-container>
+</ion-content>

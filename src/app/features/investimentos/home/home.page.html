@@ -1,51 +1,38 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Investimentos
-    </ion-title>
+    <ion-title>Investimentos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!--<ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">investimentos</ion-title>
-    </ion-toolbar>
-  </ion-header>-->
-
-   <!-- Loading Spinner -->
-   <div *ngIf="isLoading" class="loading-spinner">
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-spinner">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Carregando...</p>
   </div>
 
   <ng-container *ngIf="!isLoading">
-   <!-- Gráfico -->
-  <div style="padding: 16px;">
-    <canvas #barChart></canvas>
-  </div>
+    <!-- Gráfico -->
+    <div style="padding: 16px;">
+      <canvas #barChart></canvas>
+    </div>
 
-  <!-- Lista -->
-  <div style="overflow-x: auto;">
-    <ion-grid style="min-width: 800px; white-space: nowrap;">
-      <!-- Cabeçalho da tabela -->
-      <ion-row class="header">
-        <ion-col><strong>Ativo</strong></ion-col>
-        <ion-col><strong>Quantidade</strong></ion-col>
-        <ion-col><strong>Preço Médio</strong></ion-col>
-        <ion-col><strong>Nota</strong></ion-col>
-        <ion-col><strong>Categoria</strong></ion-col>
-      </ion-row>
+    <!-- Título com Botão ao Lado -->
+    <div class="header-with-button">
+      <h1>Categorias de ativos</h1>
+      <ion-button (click)="navigateToCalcularAporte()" fill="outline" color="primary">
+        Novo Aporte
+      </ion-button>
+    </div>
 
-      <!-- Conteúdo da tabela -->
-      <ion-row *ngFor="let investimento of investimentos">
-        <ion-col>{{ investimento.desc_ativo }}</ion-col>
-        <ion-col>{{ investimento.qtd_cateira }}</ion-col>
-        <ion-col>R$ {{ investimento.preco_medio }}</ion-col>
-        <ion-col>{{ investimento.nota_ativo }}</ion-col>
-        <ion-col>{{ investimento.desc_categoria }}</ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-</ng-container>
+    <!-- Lista de Categorias -->
+    <div class="categories-container">
+      <div
+        *ngFor="let categoria of categorias"
+        class="category-box"
+        (click)="navigateToCategoria(categoria.id)">
+        <h2>{{ categoria.desc_categoria }}</h2>
+      </div>
+    </div>
+  </ng-container>
 </ion-content>

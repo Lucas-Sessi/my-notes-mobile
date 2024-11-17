@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Calcular Aporte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Calculando...</p>
+  </div>
+
+  <!-- Campo para inserir o valor do aporte -->
+  <ion-item>
+    <ion-label position="floating">Valor do Aporte</ion-label>
+    <ion-input type="number" [(ngModel)]="aporte"></ion-input>
+  </ion-item>
+  
+  <!-- Botão para calcular -->
+  <ion-button expand="block" (click)="calcularAporte()">Calcular</ion-button>
+
+  <!-- Exibição da distribuição -->
+  <div *ngIf="!isLoading && distribuicao.length > 0">
+    <!-- Exibição por Categoria -->
+    <div *ngFor="let categoria of distribuicao" class="categoria-container">
+      <h1>
+        {{ categoria.desc_categoria }} <br>
+      </h1>
+      <h2>
+        Ideal: {{ categoria.valorIdeal | currency:'R$':'code' }} <br> 
+        Atual: {{ categoria.valorAtual | currency:'R$':'code' }}
+      </h2>
+
+      <!-- Exibição dos Ativos -->
+      <ion-list>
+        <ion-item *ngFor="let ativo of categoria.ativos">
+          <ion-label>
+            <h3>{{ transformToUpperCase(ativo.sigla_ativo) }}</h3>
+            <p>
+              Nota: {{ ativo.nota_ativo }} <br />
+              Preço Médio: {{ ativo.preco_medio | currency:'R$':'code' }} <br />
+              Cotação Atual: {{ ativo.preco_atual | currency:'R$':'code' }} <br />
+              Quantidade: {{ ativo.qtd_cateira }} <br />
+              Saldo: {{ ativo.valorAtual | currency:'R$':'code' }} <br />
+              Ideal: {{ ativo.valorIdeal | currency:'R$':'code' }} <br />
+            </p>
+          </ion-label>
+          <span>
+            Aportar: {{ ativo.diferencaRebalancear | currency:'R$':'code' }}
+          </span>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

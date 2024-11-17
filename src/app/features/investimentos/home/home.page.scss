@@ -1,40 +1,64 @@
-canvas {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  
-  .header {
-    background-color: #f0f0f0;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    font-size: 14px; /* Define o tamanho da fonte no cabeçalho */
-  }
-  
-  ion-row {
-    border-bottom: 1px solid #ddd; /* Linha horizontal para separar as linhas da tabela */
-  }
-  
-  ion-col {
-    text-align: center;
-    min-width: 60px; /* Reduz ainda mais a largura mínima para aproximar as colunas */
-    padding: 4px; /* Reduz o espaçamento interno de cada coluna */
-    font-size: 13px; /* Define um tamanho de fonte menor para as células */
-    border-right: 1px solid #ddd; /* Linha vertical para separar as colunas */
-  }
-  
-  ion-col:last-child {
-    border-right: none; /* Remove a linha na última coluna para evitar uma borda extra */
-  }
-  
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #6366f1; // Customize a cor, se necessário
+}
 
-  .loading-spinner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-    color: #6366f1; // Customize a cor, se necessário
-  }
-  
+.categories-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.category-box {
+  width: 90%;
+  padding: 16px;
+  background-color: #333; /* Cor de fundo escura para o tema dark */
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  text-align: center;
+}
+
+.category-box:hover {
+  transform: scale(1.05);
+  background-color: #444;
+}
+
+.category-box h2 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+}
+
+.category-box p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+
+.header-with-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px;
+}
+
+.header-with-button h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+ion-button {
+  margin-left: 16px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+}

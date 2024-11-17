@@ -1,0 +1,59 @@
+canvas {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .header {
+    background-color: #f0f0f0;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px; /* Define o tamanho da fonte no cabeçalho */
+  }
+  
+  ion-row {
+    border-bottom: 1px solid #ddd; /* Linha horizontal para separar as linhas da tabela */
+  }
+  
+  ion-col {
+    text-align: center;
+    min-width: 60px; /* Reduz ainda mais a largura mínima para aproximar as colunas */
+    padding: 4px; /* Reduz o espaçamento interno de cada coluna */
+    font-size: 13px; /* Define um tamanho de fonte menor para as células */
+    border-right: 1px solid #ddd; /* Linha vertical para separar as colunas */
+  }
+  
+  ion-col:last-child {
+    border-right: none; /* Remove a linha na última coluna para evitar uma borda extra */
+  }
+  
+
+  .loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #6366f1; // Customize a cor, se necessário
+  }
+  
+
+  .variacao {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  
+    ion-icon {
+      font-size: 1.2rem;
+    }
+  
+    &.positivo {
+      color: #4caf50; /* Verde */
+    }
+  
+    &.negativo {
+      color: #f44336; /* Vermelho */
+    }
+  }
+  

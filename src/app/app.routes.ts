@@ -5,13 +5,26 @@ import { TabsPage } from './common/layout/tabs/tabs.page';
 export const routes: Routes = [
   {
     path: 'tabs',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: TabsPage,
     children: [
       {
         path: 'investimentos',
-        loadComponent: () =>
-          import('./features/investimentos/home/home.page').then((m) => m.HomePage),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>import('./features/investimentos/home/home.page').then((m) => m.HomePage),
+          },
+          {
+            path: 'ativos/:id',
+            loadComponent: () => import('./features/investimentos/ativos/ativos.component').then((m) => m.AtivosComponent),
+          },
+          {
+            path: 'calcular-aporte',
+            loadComponent: () =>
+              import('./features/investimentos/calcular-aporte/calcular-aporte.component').then((m) => m.CalcularAporteComponent),
+          },
+        ]
       },
       {
         path: 'tab2',
@@ -25,14 +38,14 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/investimentos',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/investimentos',
     pathMatch: 'full',
   },
   {

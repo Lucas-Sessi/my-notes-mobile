@@ -7,6 +7,15 @@ import { AppComponent } from './app/app.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './app/common/interceptors/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { addIcons } from 'ionicons';
+import { caretUpOutline, caretDownOutline, arrowUpOutline, arrowDownOutline } from 'ionicons/icons';
+
+addIcons({
+  'caret-up-outline': caretUpOutline,
+  'caret-down-outline': caretDownOutline,
+  'arrow-up-outline': arrowUpOutline,
+  'arrow-down-outline': arrowDownOutline,
+});
 
 bootstrapApplication(AppComponent, {
   providers: [
