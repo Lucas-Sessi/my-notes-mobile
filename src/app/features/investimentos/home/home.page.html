@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!-- Ion Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <!-- Loading Spinner -->
   <div *ngIf="isLoading" class="loading-spinner">
     <ion-spinner name="crescent"></ion-spinner>
@@ -30,8 +35,20 @@
       <div
         *ngFor="let categoria of categorias"
         class="category-box"
-        (click)="navigateToCategoria(categoria.id)">
+        (click)="navigateToCategoria(categoria.id_categoria)">
         <h2>{{ categoria.desc_categoria }}</h2>
+        <p>
+          Percentual Ideal: {{ categoria.percent_ideal_cateira }}%<br />
+          Valor Atual: R$ {{ categoria.valorAtual | number:'1.2-2' }}<br />
+          Percentual Real: 
+          <span
+            [ngClass]="{
+              'positivo': categoria.percentualReal >= categoria.percent_ideal_cateira,
+              'negativo': categoria.percentualReal < categoria.percent_ideal_cateira
+            }">
+            {{ categoria.percentualReal | number:'1.2-2' }}%
+          </span>
+        </p>
       </div>
     </div>
   </ng-container>

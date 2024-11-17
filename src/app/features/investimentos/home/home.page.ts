@@ -1,6 +1,6 @@
 import { CategoriaInvestimentoService } from './../../../shared/services/categoria_investimento/categoria-investimento.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonButton, IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow } from '@ionic/angular/standalone';
+import { IonRefresher, IonRefresherContent, IonButton, IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
@@ -17,6 +17,7 @@ import { CategoriaUsuarioService } from 'src/app/shared/services/categoria-usuar
   imports: [
     CommonModule,
     IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow, IonButton,
+    IonRefresher, IonRefresherContent,
     CategoriasComponent,
   ],
 })
@@ -26,7 +27,6 @@ export class HomePage implements OnInit {
   public categorias: any[] = [];
   public isLoading = true;
   private idUser = 1
-  private idCategoria = 1
 
   constructor(
     private readonly categoriaUsuarioService: CategoriaUsuarioService,
@@ -38,7 +38,7 @@ export class HomePage implements OnInit {
   }
 
   loadData() {
-    this.categoriaUsuarioService.findAll(this.idUser, this.idCategoria).subscribe({
+    this.categoriaUsuarioService.findAll(this.idUser).subscribe({
       next: (response) => {
         console.log('Investimentos:', response.data);
         this.categorias = response.data || [];
@@ -63,10 +63,6 @@ export class HomePage implements OnInit {
     this.router.navigate(['tabs/investimentos/ativos', id]);
   }
 
-  // navigateToCategoria(id: number) {
-  //   this.router.navigate(['/categorias', id]);
-  // }
-
   createChart() {
     if (!this.barChart || !this.barChart.nativeElement) {
       console.error('Elemento barChart não está disponível!');
@@ -74,12 +70,12 @@ export class HomePage implements OnInit {
     }
 
     const totalPrecoMedio = this.categorias.reduce(
-      (acc, item) => acc + item.percent_ideal_cateira,
+      (acc, item) => acc + item.percentualReal,
       0
     );
     const labels = this.categorias.map((item) => item.desc_categoria);
     const data = this.categorias.map(
-      (item) => (item.percent_ideal_cateira / totalPrecoMedio) * 100
+      (item) => (item.percentualReal / totalPrecoMedio) * 100
     );
 
     const colors = this.categorias.map(
@@ -134,5 +130,15 @@ export class HomePage implements OnInit {
     };
 
     this.chart = new Chart(this.barChart.nativeElement, config);
+  }
+
+  doRefresh(event: any) {
+    // Atualiza os dados
+    this.loadData();
+  
+    // Aguarda 1 segundo (simulação de carregamento) antes de concluir o refresh
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
   }
 }

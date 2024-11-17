@@ -43,6 +43,15 @@
   font-size: 1rem;
 }
 
+.positivo {
+  color: #4caf50; /* Verde */
+  font-weight: bold;
+}
+
+.negativo {
+  color: #f44336; /* Vermelho */
+  font-weight: bold;
+}
 
 .header-with-button {
   display: flex;

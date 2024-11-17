@@ -14,8 +14,8 @@ export class CategoriaUsuarioService {
         private http: HttpClient,
     ) {}
 
-    public findAll(idUser: number, idCategoria: number): Observable<any> {
-        return this.http.get(`${this.url}/list/?idUser=${idUser}&idCategoria=${idCategoria}`)
+    public findAll(idUser: number): Observable<any> {
+        return this.http.get(`${this.url}/list/${idUser}`)
     }
 
     public findOneById(id: number): Observable<any> {
