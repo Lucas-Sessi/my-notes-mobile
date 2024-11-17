@@ -1,7 +1,14 @@
-<ion-content>
+<ion-content class="login-content">
+  <!-- Imagem do login -->
+  <div class="login-logo">
+    <img src="assets/images/login.png" alt="Login Logo" />
+  </div>
+
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Login</ion-card-title>
+      <ion-card-title>
+        Faça login para acessar sua conta
+      </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -23,7 +30,10 @@
         Entrar com Biometria
       </ion-button>
 
-      <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+      <!-- Loading Spinner -->
+      <div class="loading-spinner" *ngIf="isLoading">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

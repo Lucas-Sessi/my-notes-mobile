@@ -5,7 +5,7 @@ import { TabsPage } from './common/layout/tabs/tabs.page';
 export const routes: Routes = [
   {
     path: 'tabs',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: TabsPage,
     children: [
       {

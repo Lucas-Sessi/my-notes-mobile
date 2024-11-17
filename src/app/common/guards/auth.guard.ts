@@ -10,6 +10,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     const token = this.sessionService.getToken();
+    console.log('Token:', token);
     if (token) {
       return true;
     } else {

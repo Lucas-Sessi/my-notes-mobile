@@ -28,6 +28,13 @@ export class AuthService {
 
       const token = response.data.access_token;
 
+      await this.clearCredentials();
+
+      await NativeBiometric.verifyIdentity({
+        reason: 'Autenticação necessária para salvar o token.',
+        title: 'Confirmação Biométrica',
+      });
+
       // Salva o token na biometria
       await this.saveToken(token);
 
@@ -98,4 +105,13 @@ export class AuthService {
       return null;
     }
   }
+
+  async clearCredentials(): Promise<void> {
+    try {
+      await NativeBiometric.deleteCredentials({ server: this.server });
+      console.log('Credenciais antigas apagadas com sucesso.');
+    } catch (error) {
+      console.warn('Nenhuma credencial para apagar ou erro ao tentar limpar:', error);
+    }
+  }  
 }
