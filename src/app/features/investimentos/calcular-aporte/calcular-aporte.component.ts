@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 export class CalcularAporteComponent {
   aporte = null;
   distribuicao: any[] = [];
+  public valorResidual: number | undefined;
   idUser = 1;
   isLoading = false;
 
@@ -33,8 +34,9 @@ export class CalcularAporteComponent {
 
     this.ativoUsuarioService.calcularAporte(data).subscribe({
       next: (response) => {
-        console.log('Distribuição:', response.data.distribuicao);
+        console.log('Distribuição:', response.data);
         this.distribuicao = response.data.distribuicao;
+        this.valorResidual = response.data.valorResidual;
 
         this.isLoading = false;
       },

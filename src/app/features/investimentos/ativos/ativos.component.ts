@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow, IonIcon } from '@ionic/angular/standalone';
+import { IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-ativos',
@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   imports: [
     CommonModule,
     IonIcon,
-    IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow,
+    IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow, IonButton
   ],
 })
 export class AtivosComponent  implements OnInit {
@@ -28,6 +28,7 @@ export class AtivosComponent  implements OnInit {
   constructor(
     private readonly ativoUsuarioService: AtivoUsuarioService,
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
   ) {}
 
   ngOnInit() {
@@ -58,6 +59,11 @@ export class AtivosComponent  implements OnInit {
     });
   }
 
+  editarInvestimento(idAtivo: number) {
+    console.log('ID do ativo:', idAtivo);
+    this.router.navigate(['tabs/investimentos/ativos/editar', idAtivo]);
+  }
+
   createChart() {
     if (!this.barChart || !this.barChart.nativeElement) {
       console.error('Elemento barChart não está disponível!');
@@ -65,12 +71,12 @@ export class AtivosComponent  implements OnInit {
     }
 
     const totalPrecoMedio = this.investimentos.reduce(
-      (acc, item) => acc + item.cotacaoAtual,
+      (acc, item) => acc + item.saldoAtual,
       0
     );
     const labels = this.investimentos.map((item) => item.sigla_ativo.toUpperCase());
     const data = this.investimentos.map(
-      (item) => (item.cotacaoAtual / totalPrecoMedio) * 100
+      (item) => (item.saldoAtual / totalPrecoMedio) * 100
     );
 
     const colors = this.investimentos.map(

@@ -1,112 +1,184 @@
 /* Container do loading */
 .loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-    color: #6366f1;
-  }
-  
-  /* Título da categoria */
-  .categoria-container h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 12px;
-    color: #f8f8fc; /* Azul claro */
-    text-align: center;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 8px;
-  }
-  
-  /* Subtítulos (valores Ideal e Atual) */
-  .categoria-container h2 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin: 16px 0;
-    color: #d1d1e0;
-    text-align: center;
-  }
-  
-  /* Container da categoria */
-  .categoria-container {
-    margin: 16px 0;
-    padding: 20px;
-    border-radius: 12px;
-    background: linear-gradient(145deg, #1e1e2e, #252537);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    color: #e0e0e0;
-  }
-  
-  /* Lista de ativos */
-  ion-list {
-    padding: 0;
-    margin: 0;
-  
-    ion-item {
-      margin: 12px 0;
-      border-radius: 8px;
-      padding: 16px;
-      background: linear-gradient(145deg, #2a2a3a, #1f1f2f);
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.6);
-  
-      ion-label {
-        padding: 8px 0;
-  
-        h3 {
-          margin: 0 0 8px;
-          font-size: 1rem;
-          font-weight: bold;
-          color: #f8f8f8;
-        }
-  
-        p {
-          margin: 4px 0 0;
-          font-size: 0.9rem;
-          line-height: 1.5;
-          color: #c0c0c8;
-        }
-      }
-  
-      span {
-        font-weight: bold;
-        font-size: 0.9rem;
-        color: #4caf50; /* Verde para valores positivos */
-      }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #6366f1;
+  font-size: 1rem;
+  animation: fade-in 0.5s ease-in-out;
+}
+
+/* Título da categoria */
+.categoria-container h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #f8f8fc; /* Azul claro */
+  text-align: center;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+/* Subtítulos (valores Ideal e Atual) */
+.categoria-container h2 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 16px 0;
+  color: #d1d1e0;
+  text-align: center;
+}
+
+/* Container da categoria */
+.categoria-container {
+  margin: 16px 0;
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #1e1e2e, #252537);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  color: #e0e0e0;
+}
+
+/* Lista de ativos */
+ion-list {
+  padding: 0;
+  margin: 0;
+
+  ion-item {
+    margin: 12px 0;
+    border-radius: 8px;
+    padding: 16px;
+    background: linear-gradient(145deg, #2a2a3a, #1f1f2f);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     }
-  }
-  
-  /* Espaçamento entre itens */
-  ion-item:not(:last-child) {
-    margin-bottom: 16px;
-  }
-  
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .categoria-container {
-      padding: 16px;
-  
-      h1 {
-        font-size: 1.2rem;
-      }
-  
-      h2 {
+
+    ion-label {
+      padding: 8px 0;
+
+      h3 {
+        margin: 0 0 8px;
         font-size: 1rem;
+        font-weight: bold;
+        color: #f8f8f8;
+      }
+
+      p {
+        margin: 4px 0 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #c0c0c8;
       }
     }
-  
-    ion-item {
-      flex-direction: column;
-      align-items: flex-start;
-  
-      ion-label {
-        width: 100%;
-      }
-  
-      span {
-        margin-top: 8px;
-      }
+
+    span {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #4caf50; /* Verde para valores positivos */
     }
   }
-  
+}
+
+/* Destaque para valores em caixa */
+.valor-residual-container {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #292938, #202030);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: #d1d1e0;
+  font-size: 1.1rem;
+
+  h2 {
+    color: #ffd700; /* Amarelo para destaque */
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 8px;
+    color: #b3b3c8;
+    font-size: 0.9rem;
+  }
+}
+
+/* Espaçamento entre itens */
+ion-item:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+/* Botão Simular Distribuição */
+ion-button {
+  margin-top: 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: #6366f1;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #5358d6;
+  }
+
+  &:disabled {
+    background: #ccc;
+    color: #666;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .categoria-container {
+    padding: 16px;
+
+    h1 {
+      font-size: 1.2rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+  }
+
+  ion-item {
+    flex-direction: column;
+    align-items: flex-start;
+
+    ion-label {
+      width: 100%;
+    }
+
+    span {
+      margin-top: 8px;
+    }
+  }
+
+  .valor-residual-container {
+    h2 {
+      font-size: 1.1rem;
+    }
+
+    p {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+/* Animação para loading */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

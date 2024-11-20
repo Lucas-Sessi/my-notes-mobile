@@ -1,6 +1,7 @@
 .login-content {
     --background: #1e1e2e;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -9,7 +10,7 @@
     .login-logo {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      padding-top: 25px;
   
       img {
         width: 120px;
