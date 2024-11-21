@@ -59,17 +59,22 @@ export class CadastrarEditarAtivoComponent implements OnInit {
       id_usuario: [1],
       id_ativo: [null, [Validators.required]],
       nota_ativo: [null, [Validators.required, Validators.min(1), Validators.max(10)]],
-    });
+      qtd_cateira: [null, [Validators.required, Validators.min(0)]],
+      preco_medio: [null, [Validators.required, Validators.min(0)]],
+    });    
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
+
       if (id) {
         this.isEditMode = true;
         this.ativoId = Number(id);
 
         this.loadAtivo(this.ativoId);
+      } else {
+        this.findAtivosInvestimentos();
       }
     });
   }
@@ -82,6 +87,8 @@ export class CadastrarEditarAtivoComponent implements OnInit {
         id_usuario: ativo.data.id_usuario,
         id_ativo: ativo.data.id_ativo,
         nota_ativo: ativo.data.nota_ativo,
+        qtd_cateira: ativo.data.qtd_cateira,
+        preco_medio: ativo.data.preco_medio,
       });
 
       // this.isLoading = false;

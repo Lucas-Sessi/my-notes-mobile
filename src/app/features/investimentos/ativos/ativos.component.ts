@@ -59,6 +59,10 @@ export class AtivosComponent  implements OnInit {
     });
   }
 
+  navigateToCadastrarAtivo() {
+    this.router.navigate(['tabs/investimentos/ativos/cadastrar']);
+  }
+
   editarInvestimento(idAtivo: number) {
     console.log('ID do ativo:', idAtivo);
     this.router.navigate(['tabs/investimentos/ativos/editar', idAtivo]);

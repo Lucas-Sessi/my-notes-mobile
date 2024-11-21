@@ -5,7 +5,7 @@ import { TabsPage } from './common/layout/tabs/tabs.page';
 export const routes: Routes = [
   {
     path: 'tabs',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: TabsPage,
     children: [
       {
@@ -15,12 +15,12 @@ export const routes: Routes = [
             path: '',
             loadComponent: () =>import('./features/investimentos/home/home.page').then((m) => m.HomePage),
           },
+          { path: 'ativos/cadastrar', loadComponent: () => import('./features/investimentos/ativos/cadastrar-editar-ativo/cadastrar-editar-ativo.component').then((m) => m.CadastrarEditarAtivoComponent) },
+          { path: 'ativos/editar/:id', loadComponent: () => import('./features/investimentos/ativos/cadastrar-editar-ativo/cadastrar-editar-ativo.component').then((m) => m.CadastrarEditarAtivoComponent) },
           {
             path: 'ativos/:id',
             loadComponent: () => import('./features/investimentos/ativos/ativos.component').then((m) => m.AtivosComponent),
           },
-          { path: 'ativos/novo', loadComponent: () => import('./features/investimentos/ativos/cadastrar-editar-ativo/cadastrar-editar-ativo.component').then((m) => m.CadastrarEditarAtivoComponent) },
-          { path: 'ativos/editar/:id', loadComponent: () => import('./features/investimentos/ativos/cadastrar-editar-ativo/cadastrar-editar-ativo.component').then((m) => m.CadastrarEditarAtivoComponent) },
           {
             path: 'calcular-aporte',
             loadComponent: () =>

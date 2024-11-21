@@ -29,6 +29,18 @@
       <ion-input formControlName="nota_ativo" type="number"></ion-input>
     </ion-item>
 
+    <!-- Quantidade na Carteira -->
+    <ion-item>
+      <ion-label position="floating">Quantidade na Carteira</ion-label>
+      <ion-input formControlName="qtd_cateira" type="number"></ion-input>
+    </ion-item>
+
+    <!-- Preço Médio -->
+    <ion-item>
+      <ion-label position="floating">Preço Médio</ion-label>
+      <ion-input formControlName="preco_medio" type="number" step="0.01"></ion-input>
+    </ion-item>
+
     <!-- Botão para Salvar -->
     <ion-button expand="block" type="submit" [disabled]="ativoForm.invalid">
       {{ isEditMode ? 'Atualizar' : 'Criar' }}

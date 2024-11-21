@@ -24,6 +24,12 @@
     <canvas #barChart></canvas>
   </div>
 
+  <div class="button-cadastrar">
+    <ion-button (click)="navigateToCadastrarAtivo()" fill="outline" color="primary">
+      cadastrar ativo
+    </ion-button>
+  </div>
+
   <!-- Lista -->
   <div style="overflow-x: auto;">
     <ion-grid style="min-width: 800px; white-space: nowrap;">
@@ -54,9 +60,9 @@
           </div>
         </ion-col>
         <ion-col>
-          <ion-button color="primary" (click)="editarInvestimento(investimento.id_ativo)">
-            <ion-icon name="create"></ion-icon>
-          </ion-button>
+          <ion-button color="primary" (click)="editarInvestimento(investimento.id_ativo)" class="button-editar">
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>                  
         </ion-col>
       </ion-row>
     </ion-grid>
