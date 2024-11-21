@@ -1,21 +1,21 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  IonButton,
   IonCard,
+  IonCardContent,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent,
+  IonContent,
+  IonInput,
   IonItem,
   IonLabel,
-  IonInput,
-  IonButton,
   IonSpinner,
-  IonContent,
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { SessionService } from 'src/app/shared/services/auth/session.service';
+import { ToastService } from 'src/app/shared/utils/toast/toast.component';
 
 @Component({
   selector: 'app-login',
@@ -44,50 +44,46 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private sessionService: SessionService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
-  // Verifica se o token existe ao inicializar
   async ngOnInit() {
     try {
-      const token = await this.authService.getToken();
-      if (token) {
-        // Se o token existe, tenta login biométrico automaticamente
-        await this.loginWithBiometrics();
-      }
+      await this.loginWithBiometrics();
     } catch (error) {
       console.error('Erro ao verificar o token:', error);
     }
   }
 
-  // Login Manual
   async login() {
     this.isLoading = true;
     try {
       const token = await this.authService.login(this.email, this.password);
-      this.sessionService.setToken(token); // Salva o token na sessão
-      this.router.navigate(['']); // Redireciona para a área autenticada
+      
+      this.router.navigate(['']);
     } catch (error) {
       console.error('Erro ao fazer login:', error);
+      await this.toastService.error('Erro ao fazer login. Verifique suas credenciais.');
     } finally {
       this.isLoading = false;
     }
   }
 
-  // Login Biométrico
   async loginWithBiometrics() {
     this.isLoading = true;
     try {
       const token = await this.authService.authenticateWithBiometrics();
-      if (token) {
-        this.sessionService.setToken(token); // Salva o token na sessão
-        this.router.navigate(['']); // Redireciona para a área autenticada
-      } else {
-        console.error('Autenticação biométrica falhou ou token não encontrado.');
+
+      if (!token) {
+        console.warn('Token não encontrado. Fazendo login manual.');
+        return await this.toastService.error('Autenticação biométrica falhou. Faça o login.');;
       }
+
+      return this.router.navigate(['']);
     } catch (error) {
       console.error('Erro na autenticação biométrica:', error);
+      await this.toastService.error('Autenticação biométrica falhou. Faça o login.');
     } finally {
       this.isLoading = false;
     }

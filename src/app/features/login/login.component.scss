@@ -1,3 +1,8 @@
+ion-content {
+  --padding: 2%;
+}
+
+
 .login-content {
     --background: #1e1e2e;
     display: flex;
@@ -13,8 +18,8 @@
       padding-top: 25px;
   
       img {
-        width: 120px;
-        height: 120px;
+        width: 90px;
+        height: 90px;
         border-radius: 50%;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       }
@@ -31,7 +36,8 @@
       ion-card-header {
         text-align: center;
         ion-card-title {
-          font-size: 1.5rem;
+          margin: 10px;
+          font-size: 1.4rem;
           font-weight: bold;
           color: #6366f1;
         }
@@ -48,12 +54,13 @@
   
         ion-input {
           color: #f8f8f8;
+          font-size: 0.8rem;
         }
       }
   
       ion-button {
         margin-top: 10px;
-        font-size: 1rem;
+        font-size: 0.8rem;
         font-weight: bold;
   
         &[color="secondary"] {
