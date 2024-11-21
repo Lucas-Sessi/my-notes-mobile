@@ -11,21 +11,11 @@ export const routes: Routes = [
       {
         path: 'investimentos',
         children: [
-          {
-            path: '',
-            loadComponent: () =>import('./features/investimentos/home/home.page').then((m) => m.HomePage),
-          },
+          { path: '', loadComponent: () => import('./features/investimentos/home/home.page').then((m) => m.HomePage) },
           { path: 'ativos/cadastrar', loadComponent: () => import('./features/investimentos/ativos/cadastrar-editar-ativo/cadastrar-editar-ativo.component').then((m) => m.CadastrarEditarAtivoComponent) },
           { path: 'ativos/editar/:id', loadComponent: () => import('./features/investimentos/ativos/cadastrar-editar-ativo/cadastrar-editar-ativo.component').then((m) => m.CadastrarEditarAtivoComponent) },
-          {
-            path: 'ativos/:id',
-            loadComponent: () => import('./features/investimentos/ativos/ativos.component').then((m) => m.AtivosComponent),
-          },
-          {
-            path: 'calcular-aporte',
-            loadComponent: () =>
-              import('./features/investimentos/calcular-aporte/calcular-aporte.component').then((m) => m.CalcularAporteComponent),
-          },
+          { path: 'ativos/:id', loadComponent: () => import('./features/investimentos/ativos/ativos.component').then((m) => m.AtivosComponent) },
+          { path: 'calcular-aporte', loadComponent: () => import('./features/investimentos/calcular-aporte/calcular-aporte.component').then((m) => m.CalcularAporteComponent) },
         ]
       },
       {

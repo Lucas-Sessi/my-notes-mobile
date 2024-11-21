@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-ativos',
@@ -14,7 +14,17 @@ import { ActivatedRoute, Router } from '@angular/router';
   imports: [
     CommonModule,
     IonIcon,
-    IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow, IonButton
+    IonSpinner, 
+    IonCol, 
+    IonContent, 
+    IonHeader,
+    IonToolbar, 
+    IonTitle, 
+    IonGrid, 
+    IonRow, 
+    IonButton,
+    IonRefresher, 
+    IonRefresherContent,
   ],
 })
 export class AtivosComponent  implements OnInit {
@@ -151,5 +161,15 @@ export class AtivosComponent  implements OnInit {
 
   getCategoriaDescricao(): string {
     return this.investimentos.length > 0 ? this.investimentos[0].desc_categoria : '';
-  }  
+  }
+
+  doRefresh(event: any) {
+    // Atualiza os dados
+    this.loadData();
+  
+    // Aguarda 1 segundo (simulação de carregamento) antes de concluir o refresh
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
 }

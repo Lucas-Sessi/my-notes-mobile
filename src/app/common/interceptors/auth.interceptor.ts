@@ -9,11 +9,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { ToastService } from 'src/app/shared/utils/toast/toast.component';
 import { AuthService } from '../../shared/services/auth/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private readonly toastService: ToastService,    
+    ) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -42,6 +47,8 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           console.warn('Token inválido ou expirado. Limpando credenciais.');
           this.authService.clearCredentials().then(() => {
+            this.toastService.error('Sua sessão expirou. Faça login novamente.');
+            
             this.router.navigate(['/login']);
           });
         }

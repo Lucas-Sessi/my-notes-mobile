@@ -1,13 +1,11 @@
-import { CategoriaInvestimentoService } from './../../../shared/services/categoria_investimento/categoria-investimento.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonRefresher, IonRefresherContent, IonButton, IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
-import { CategoriasComponent } from '../categorias/categorias.component';
-import { Router } from '@angular/router';
 import { CategoriaUsuarioService } from 'src/app/shared/services/categoria-usuario/categoria-usuario.service';
+import { CategoriasComponent } from '../categorias/categorias.component';
 
 @Component({
   selector: 'app-investimentos-home',
@@ -16,8 +14,17 @@ import { CategoriaUsuarioService } from 'src/app/shared/services/categoria-usuar
   standalone: true,
   imports: [
     CommonModule,
-    IonSpinner, IonCol, IonContent, IonHeader, IonToolbar, IonTitle, IonGrid, IonRow, IonButton,
-    IonRefresher, IonRefresherContent,
+    IonSpinner, 
+    IonCol, 
+    IonContent, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonGrid, 
+    IonRow, 
+    IonButton,
+    IonRefresher, 
+    IonRefresherContent,
     CategoriasComponent,
   ],
 })
