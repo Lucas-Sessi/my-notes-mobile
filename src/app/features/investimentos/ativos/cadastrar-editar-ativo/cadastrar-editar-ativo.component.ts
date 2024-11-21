@@ -1,24 +1,25 @@
 import {
   CommonModule,
 } from '@angular/common';
-import {
-  IonSelect,
-  IonSelectOption,
-  IonLabel,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonItem,
-  IonInput,
-  IonButton,
-  IonSpinner,
-} from '@ionic/angular/standalone';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonSelect,
+  IonSelectOption,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { AtivoInvestimentoService } from 'src/app/shared/services/ativo_investimento/ativo_investimento.service';
+import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
+import { ToastService } from 'src/app/shared/utils/toast/toast.component';
 
 @Component({
   selector: 'app-cadastrar-editar-ativo',
@@ -53,7 +54,8 @@ export class CadastrarEditarAtivoComponent implements OnInit {
     private ativoUsuarioSService: AtivoUsuarioService,
     private router: Router,
     private route: ActivatedRoute,
-    private readonly ativoInvestimentoService: AtivoInvestimentoService
+    private readonly ativoInvestimentoService: AtivoInvestimentoService,
+    private readonly toastService: ToastService,
   ) {
     this.ativoForm = this.fb.group({
       id_usuario: [1],
@@ -79,7 +81,7 @@ export class CadastrarEditarAtivoComponent implements OnInit {
     });
   }
 
-  loadAtivo(id: number) {
+  private loadAtivo(id: number) {
     this.ativoUsuarioSService.findOneById(id).subscribe((ativo) => {
       this.findAtivosInvestimentos();
 
@@ -90,12 +92,10 @@ export class CadastrarEditarAtivoComponent implements OnInit {
         qtd_cateira: ativo.data.qtd_cateira,
         preco_medio: ativo.data.preco_medio,
       });
-
-      // this.isLoading = false;
     });
   }
 
-  findAtivosInvestimentos() {
+  private findAtivosInvestimentos() {
     this.ativoInvestimentoService.findAll().subscribe({
       next: (response) => {
         this.ativosInvestimentosSelect = response.data;
@@ -107,19 +107,56 @@ export class CadastrarEditarAtivoComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  private createAtivo(data: any) {
+    this.ativoUsuarioSService.create(data).subscribe({
+      next: () => {
+        this.toastService.success('Ativo cadastrado com sucesso!');
+        
+        this.isLoading = false;
+
+        this.router.navigate(['/ativos']);
+      },
+      error: (error) => {
+        this.isLoading = false;
+
+        this.toastService.error('Erro ao criar ativo!');
+      },
+    });
+  }
+
+  private updateAtivo(data: any) {
+    this.ativoUsuarioSService.update(this.ativoId as number, data).subscribe({
+      next: () => {
+        this.toastService.success('Ativo atualizado com sucesso!');
+
+        this.isLoading = false;
+
+        this.router.navigate(['/ativos']);
+      },
+      error: (error) => {
+        this.isLoading = false;
+
+        this.toastService.error('Erro ao atualizar ativo!');
+      },
+    });
+  }
+
+  public onSubmit() {
+    if (this.ativoForm.invalid) {
+      this.toastService.error('Preencha todos os campos corretamente.');
+      return;
+    }
+
     if (this.ativoForm.valid) {
+      this.isLoading = true;
+      
       const formData = this.ativoForm.value;
 
       if (this.isEditMode) {
-        this.ativoUsuarioSService.update(this.ativoId as number, formData).subscribe(() => {
-          this.router.navigate(['/ativos']);
-        });
-      } else {
-        this.ativoUsuarioSService.create(formData).subscribe(() => {
-          this.router.navigate(['/ativos']);
-        });
+        return this.updateAtivo(formData);
       }
+
+      return this.createAtivo(formData);
     }
   }
 }
