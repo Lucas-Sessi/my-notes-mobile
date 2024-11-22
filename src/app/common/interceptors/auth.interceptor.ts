@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          console.warn('Token inválido ou expirado. Limpando credenciais.');
+          
           this.authService.clearCredentials().then(() => {
             this.toastService.error('Sua sessão expirou. Faça login novamente.');
             

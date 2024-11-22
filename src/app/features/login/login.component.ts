@@ -15,6 +15,7 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { SessionService } from 'src/app/shared/services/auth/session.service';
 import { ToastService } from 'src/app/shared/utils/toast/toast.component';
 
 @Component({
@@ -44,13 +45,18 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private sessionService: SessionService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
   ) {}
 
   async ngOnInit() {
     try {
-      await this.loginWithBiometrics();
+      const token = await this.authService.getToken();
+
+      if (token) {
+        await this.loginWithBiometrics();
+      }
     } catch (error) {
       console.error('Erro ao verificar o token:', error);
     }
@@ -60,11 +66,10 @@ export class LoginPage implements OnInit {
     this.isLoading = true;
     try {
       const token = await this.authService.login(this.email, this.password);
-      
+
       this.router.navigate(['']);
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      await this.toastService.error('Erro ao fazer login. Verifique suas credenciais.');
+      this.toastService.error('Erro ao fazer login!');
     } finally {
       this.isLoading = false;
     }
@@ -75,15 +80,14 @@ export class LoginPage implements OnInit {
     try {
       const token = await this.authService.authenticateWithBiometrics();
 
-      if (!token) {
-        console.warn('Token não encontrado. Fazendo login manual.');
-        return await this.toastService.error('Autenticação biométrica falhou. Faça o login.');;
+      if (token) {
+        this.sessionService.setToken(token);
+        this.router.navigate(['']);
+      } else {
+        this.toastService.error('Sessão expirada. Faça login novamente!');
       }
-
-      return this.router.navigate(['']);
     } catch (error) {
       console.error('Erro na autenticação biométrica:', error);
-      await this.toastService.error('Autenticação biométrica falhou. Faça o login.');
     } finally {
       this.isLoading = false;
     }
