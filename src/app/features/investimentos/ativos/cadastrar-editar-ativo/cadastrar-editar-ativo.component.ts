@@ -60,9 +60,9 @@ export class CadastrarEditarAtivoComponent implements OnInit {
     this.ativoForm = this.fb.group({
       id_usuario: [1],
       id_ativo: [null, [Validators.required]],
-      nota_ativo: [null, [Validators.required, Validators.min(1), Validators.max(10)]],
-      qtd_cateira: [null, [Validators.required, Validators.min(0)]],
-      preco_medio: [null, [Validators.required, Validators.min(0)]],
+      nota_ativo: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
+      qtd_cateira: [null, [Validators.required, Validators.min(1)]],
+      preco_medio: [null, [Validators.required, Validators.min(1)]],
     });    
   }
 
@@ -81,17 +81,25 @@ export class CadastrarEditarAtivoComponent implements OnInit {
     });
   }
 
-  private loadAtivo(id: number) {
-    this.ativoUsuarioSService.findOneById(id).subscribe((ativo) => {
-      this.findAtivosInvestimentos();
-
-      this.ativoForm.patchValue({
-        id_usuario: ativo.data.id_usuario,
-        id_ativo: ativo.data.id_ativo,
-        nota_ativo: ativo.data.nota_ativo,
-        qtd_cateira: ativo.data.qtd_cateira,
-        preco_medio: ativo.data.preco_medio,
-      });
+  loadAtivo(id: number) {
+    this.ativoUsuarioSService.findOneById(id).subscribe({
+      next: (response) => {
+          this.findAtivosInvestimentos();
+    
+          this.ativoForm.patchValue({
+            id_usuario: response.data.id_usuario,
+            id_ativo: response.data.id_ativo,
+            nota_ativo: response.data.nota_ativo,
+            qtd_cateira: response.data.qtd_cateira,
+            preco_medio: response.data.preco_medio,
+          });
+    
+          // this.isLoading = false;
+      },
+      error: (error) => {
+        this.toastService.error('Erro ao carregar ativo!');
+        console.error('Erro ao listar investimentos:', error);
+      }
     });
   }
 
@@ -114,7 +122,7 @@ export class CadastrarEditarAtivoComponent implements OnInit {
         
         this.isLoading = false;
 
-        this.router.navigate(['/ativos']);
+        this.router.navigate(['/tabs/investimentos']);
       },
       error: (error) => {
         this.isLoading = false;
@@ -131,7 +139,7 @@ export class CadastrarEditarAtivoComponent implements OnInit {
 
         this.isLoading = false;
 
-        this.router.navigate(['/ativos']);
+        this.router.navigate(['/tabs/investimentos']);
       },
       error: (error) => {
         this.isLoading = false;

@@ -8,7 +8,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { AuthInterceptor } from './app/common/interceptors/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { addIcons } from 'ionicons';
-import { caretUpOutline, caretDownOutline, arrowUpOutline, arrowDownOutline, pencil } from 'ionicons/icons';
+import { caretUpOutline, caretDownOutline, arrowUpOutline, arrowDownOutline, pencil, trash } from 'ionicons/icons';
 
 addIcons({
   'caret-up-outline': caretUpOutline,
@@ -16,6 +16,7 @@ addIcons({
   'arrow-up-outline': arrowUpOutline,
   'arrow-down-outline': arrowDownOutline,
   'pencil': pencil,
+  'trash': trash,
 });
 
 bootstrapApplication(AppComponent, {

@@ -62,7 +62,10 @@
         <ion-col>
           <ion-button color="primary" (click)="editarInvestimento(investimento.id_ativo)" class="button-editar">
             <ion-icon name="pencil"></ion-icon>
-          </ion-button>                  
+          </ion-button>
+          <ion-button color="danger" (click)="deletarInvestimento(investimento.id_ativo)" class="button-acoes">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -5,6 +5,7 @@ import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonRefreshe
 import { Chart, ChartConfiguration } from 'chart.js/auto';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { AtivoUsuarioService } from 'src/app/shared/services/ativo_usuario/ativo_usuario.service';
+import { ToastService } from 'src/app/shared/utils/toast/toast.component';
 
 @Component({
   selector: 'app-ativos',
@@ -39,6 +40,7 @@ export class AtivosComponent  implements OnInit {
     private readonly ativoUsuarioService: AtivoUsuarioService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private readonly toastService: ToastService,
   ) {}
 
   ngOnInit() {
@@ -172,4 +174,20 @@ export class AtivosComponent  implements OnInit {
       event.target.complete();
     }, 1000);
   }
+
+  deletarInvestimento(idAtivo: number) {
+    const confirm = window.confirm('Tem certeza de que deseja deletar este ativo?');
+    if (confirm) {
+      this.ativoUsuarioService.delete(idAtivo).subscribe({
+        next: () => {
+          this.toastService.success('Ativo deletado com sucesso!');
+          this.isLoading = false;
+          this.router.navigate(['tabs/investimentos']);
+        },
+        error: (error) => {
+          console.error('Erro ao deletar ativo:', error);
+        },
+      });
+    }
+  }  
 }

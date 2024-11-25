@@ -18,10 +18,11 @@ canvas {
     width: 40%;
     height: 40%;
     padding: 0;
-    font-size: 5px; /* Ajusta o tamanho do ícone ou texto */
+    font-size: 10px; /* Ajusta o tamanho do ícone ou texto */
     display: flex; /* Centraliza o ícone */
     justify-content: center;
     align-items: center;
+    color: white;
   }
   
   .button-editar ion-icon {
@@ -43,10 +44,11 @@ canvas {
   
   ion-col {
     text-align: center;
-    min-width: 60px; /* Reduz ainda mais a largura mínima para aproximar as colunas */
-    padding: 4px; /* Reduz o espaçamento interno de cada coluna */
-    font-size: 13px; /* Define um tamanho de fonte menor para as células */
-    border-right: 1px solid #ddd; /* Linha vertical para separar as colunas */
+    padding: 8px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
   }
   
   ion-col:last-child {
@@ -81,5 +83,32 @@ canvas {
     &.negativo {
       color: #f44336; /* Vermelho */
     }
+  }
+
+  .acoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espaçamento entre os botões */
+  }
+
+  
+  .button-acoes {
+    --padding-start: 0;
+    --padding-end: 0;
+    --height: 10px !important; /* Define a altura do botão */
+    --width: 10px !important; /* Define a largura do botão */
+    --border-radius: 10%; /* Torna o botão circular */
+    width: 40%;
+    height: 40%;
+    padding: 0;
+    font-size: 10px; /* Ajusta o tamanho do ícone ou texto */
+    display: flex; /* Centraliza o ícone */
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+  }
+  
+  .button-acoes ion-icon, .button-editar ion-icon {
+    color: white; /* Define a cor do ícone para branco */
   }
   
